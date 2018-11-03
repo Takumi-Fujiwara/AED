@@ -9,6 +9,10 @@ def get_vertices (matriz):
 
 
 def del_vertices (matriz, u):
+    if u == 0:
+        matriz = np.delete(matriz, u, 1)
+        matriz = np.delete(matriz, u, 0)
+        return matriz
     matriz = np.delete(matriz, np.s_[u-1:u:], 1)
     matriz = np.delete(matriz, u, 0)
     return matriz
@@ -38,17 +42,18 @@ def add_arestas(matriz, u, v):
 
 
 def fonte (matriz, u):
-    for x in matriz[u]:
-        if(x ==1):
+    for x in range(len(matriz)):
+        if(matriz[x,u] == 1):
             return False
     return True
 
 
 def sumidouro (matriz, u):
-    for x in range(len(matriz)):
-        if(matriz[x,u] == 1):
+    for x in matriz[u]:
+        if(x == 1):
             return False
     return True
+
 
 
 def grau_entrada(matriz, u):
@@ -88,30 +93,35 @@ while ( x == True):
     print("10:grau entrada ")
     print("11:grau saida ")
     print("12:sair \n \n")
-    u = int(input('Digite sua opção: '))
+
+    u = input('Digite sua opção: ')
+    if u == '':
+        os.system('cls');
+        continue
+    u = int(u)
 
     if (u ==1):
         os.system('cls');
         imprimir(matriz)
-        time.sleep(2)
+        input('pressione enter para continuar')
         os.system('cls');
 
     elif(u ==2):
         os.system('cls');
         matriz = add_vertices(matriz)
-        time.sleep(2)
+        input('pressione enter para continuar')
         os.system('cls');
 
     elif(u ==3):
         os.system('cls');
         v = int(input('Digite vertice: '))
         matriz = del_vertices(matriz,v)
-        time.sleep(2)
+        input('pressione enter para continuar')
         os.system('cls');
     elif (u ==4):
         os.system('cls');
         get_vertices(matriz)
-        time.sleep(2)
+        input('pressione enter para continuar')
         os.system('cls');
 
     elif (u ==5):
@@ -133,35 +143,35 @@ while ( x == True):
     elif (u ==7):
         os.system('cls');
         get_arestas(matriz)
-        time.sleep(2)
+        input('pressione enter para continuar')
         os.system('cls');
 
     elif (u ==8):
         os.system('cls');
         u = int(input('Digite o vertice: '))
         print(fonte(matriz, u))
-        time.sleep(2)
+        input('pressione enter para continuar')
         os.system('cls');
 
     elif (u ==9):
         os.system('cls');
         u = int(input('Digite o 1 vertice: '))
         print(sumidouro(matriz, u))
-        time.sleep(2)
+        input('pressione enter para continuar')
         os.system('cls');
 
     elif (u ==10):
         os.system('cls');
         u = int(input('Digite o 1 vertice: '))
         print(grau_entrada(matriz, u))
-        time.sleep(2)
+        input('pressione enter para continuar')
         os.system('cls');
 
     elif (u ==11):
         os.system('cls');
         u = int(input('Digite o 1 vertice: '))
         print(grau_saida(matriz, u))
-        time.sleep(2)
+        input('pressione enter para continuar')
         os.system('cls');
 
     elif (u ==12):
