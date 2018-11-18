@@ -11,6 +11,49 @@ class Grafo(object):
         self.adiciona_arestas(arestas)
 
 
+    def busca_profundidade(self, u):
+        """Realiza uma busca em profundiade e apresenta sua floresta predecessor"""
+        core = defaultdict(set)
+        father = defaultdict(set)
+        final = defaultdict(int)
+        des = defaultdict(int)
+
+        for x in list(self._grafo.keys()):      # Adiciona informações a todos os vertices
+            core[x].add('B')
+            father[x]
+            des[x]
+
+        time = 0
+        des, father, core, final, time = self.dfs_visit(u, des, father, core, final, time)
+        for x in list(self._grafo.keys()):
+            if core[x] == {'B'}:
+                des, father, core, final, time = self.dfs_visit(x, des, father, core, final, time)
+
+        print('Tempo descoberto: ', des)
+        print("Tempo finalizado: ", final)
+        print('Vertices da floresta', father.keys())
+        print('Floresta predecessor: ')
+        for p in father:
+            for q in father[p]:
+                print(q, p)
+        del core, father, des, final
+
+
+    def dfs_visit(self,u,des,father,core,final,time):
+        time = time + 1
+        des[u] = time
+        core[u] = 'G'
+        for y in self._grafo[u]:
+            if core[y] == {'B'}:
+                father[y] = u
+                des, father, core, final, time = self.dfs_visit(y, des, father, core, final, time)
+        core[u] = 'P'
+        time = time + 1
+        final[u] = time
+        return des, father, core, final, time
+
+
+
     def busca_largura(self, u):
         """ Realiza uma busca em largura, imprime a distancia em relação a u, imprime arvore menor caminho"""
         cor = defaultdict(set)                  #Inicia Dicionarios Cor, Distancia e Pai
@@ -159,7 +202,8 @@ while (m == True):
     print("10:grau entrada ")
     print("11:grau saida ")
     print("12:Busca em largura ")
-    print("13:sair \n \n")
+    print("13:Busca em profundidade ")
+    print("14:sair \n \n")
 
     u = input('Digite sua opção: ')
     if u == '':
@@ -214,38 +258,45 @@ while (m == True):
 
     elif (u ==8):
         os.system('cls');
-        x = input('Fonte: qual o vertices?')
+        x = input('Fonte: Qual o vertices?')
         print(Grafo.fonte(grafo, x))  # Verifica se A é fonte
         input('pressione enter para continuar')
         os.system('cls');
 
     elif (u ==9):
         os.system('cls');
-        x = input('Sumidouro: qual o vertices?')
+        x = input('Sumidouro: Qual o vertices?')
         print(Grafo.sumidouro(grafo, x))  # Verifica se é sumidouro
         input('pressione enter para continuar')
         os.system('cls');
 
     elif (u ==10):
         os.system('cls');
-        x = input('Grau de entrada: qual o vertice?')
+        x = input('Grau de entrada: Qual o vertice?')
         print(Grafo.grau_entrada(grafo, x))  # Verifica e imprime o grau de entrada
         input('pressione enter para continuar')
         os.system('cls');
 
     elif (u ==11):
         os.system('cls');
-        x = input('Grau de saida: qual o vertice?')
+        x = input('Grau de saida: Qual o vertice?')
         print(Grafo.grau_saida(grafo, x))  # Verifica e imprime o grau de saida
         input('pressione enter para continuar')
         os.system('cls');
 
     elif (u ==12):
         os.system('cls');
-        x = input('Busca em largura: qual o vertice?')
-        Grafo.busca_largura(grafo,x)  # Verifica e imprime o grau de saida
+        x = input('Busca em largura: Qual o vertice?')
+        Grafo.busca_largura(grafo,x)  # Realiza uma busca em largura
         input('pressione enter para continuar')
         os.system('cls');
 
     elif (u ==13):
+        os.system('cls');
+        x = input('Busca em profundidade: Qual o vertice?')
+        Grafo.busca_profundidade(grafo,x)  # Realiza uma busca em profundidade
+        input('pressione enter para continuar')
+        os.system('cls');
+
+    elif (u ==14):
         m = False
